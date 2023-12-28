@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+label{
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
+}
+
+input, textarea{
+  background-color: #f1f1f1;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  margin-bottom: 0.8rem;
+  color:#626262;
+}
