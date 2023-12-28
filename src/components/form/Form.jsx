@@ -8,7 +8,9 @@ import HeaderForm from './HeaderForm';
 import * as Yup from 'yup';
 
 
-const Form = ({ setShowInvoice, name, setName,
+const Form = ({ 
+  //PROPS
+  setShowInvoice, name, setName,
   address, setAddress, invoice, setInvoice, dateDue, setDateDue, dateIssue, setDateIssue,
   invoiceName,
   invoiceAddress,
@@ -30,11 +32,13 @@ const Form = ({ setShowInvoice, name, setName,
 
   item, setItem, description, setDescription, cost, setCost, quantity, setQuantity, price, setPrice, list, setList, total, setTotal,
 
-  notes, setNotes}) => {
+  notes, setNotes
+  }) => {
 
-
+  //VALIDATION STATES
   const [validationErrors, setValidationErrors] = useState({});
-  // VALIDATION
+
+  // VALIDATION SCHEMA
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     address: Yup.string().required('Address is required'),
@@ -153,7 +157,8 @@ const Form = ({ setShowInvoice, name, setName,
           setList={setList}
           total={total}
           setTotal={setTotal}
-          validationError={validationErrors} />
+          //validationError={validationErrors} 
+          />
         <NotesForm 
           notes={notes}
           setNotes={setNotes}/>

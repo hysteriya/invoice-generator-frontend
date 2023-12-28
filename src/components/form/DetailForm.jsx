@@ -12,7 +12,7 @@ const DetailForm = ({
   validationError
 }) => {
   return (
-    <div className='grid grid-cols-2 gap-4 my-10'>
+    <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8'>
       <div className='col-span-1'>
         <div className='mb-4'>
           <label htmlFor='address' className='block text-lg mb-2'>Enter Your Address:</label>

@@ -3,10 +3,10 @@ import React from 'react'
 const NotesForm = ({ notes, setNotes, validationError }) => {
   return (
     <div>
-      <div className='text-center mb-8'>
+      {/* <div className='text-center mb-8'>
         <h1 className='text-xl font-bold text-black-500'>NOTES</h1>
-      </div>
-      <div className='flex flex-col items-center'>
+      </div> */}
+      <div className='flex flex-col items-center bg-gray-50 p-8 rounded-lg shadow-md my-8'>
         <label htmlFor='text' className='text-lg mb-2'>Add Notes:</label>
         <input
           type='text'

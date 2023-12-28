@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Details from "./components/Details";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import Header from "./components/Header";
 import InvoiceBill from "./components/InvoiceBill";
 import Notes from "./components/Notes";
@@ -8,10 +8,10 @@ import Table from "./components/Table";
 import Form from "./components/form/Form";
 
 function App() {
-
+  //INVOICE STATE
   const [showInvoice, setShowInvoice] = useState(false);
 
-  // STATES
+  // STATE VARIABLES
   const [name, setName] = useState("");
 
   const [address, setAddress] = useState("");
@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="App m-5 p-5 xl:max-w-4xl xl:mx-auto bg-slate-300 rounded shadow">
-      {showInvoice ?
+      {showInvoice ? //IF SHOWINVOICE IS TRUE: on successfull validation of form
         <div>
           <Header 
           name={name} />
@@ -76,9 +76,9 @@ function App() {
           total={total}/>
           <Notes setShowInvoice={setShowInvoice}
           notes={notes} />
-          <Footer />
-        </div> :
-        <Form setShowInvoice={setShowInvoice}
+          {/* <Footer /> */}
+        </div> : //OR SHOW THE FORM
+        <Form setShowInvoice={setShowInvoice} 
           name={name}
           setName={setName}
 

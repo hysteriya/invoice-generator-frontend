@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
+import * as Yup from 'yup';
 
-const TableForm = ({ list, setList, total, setTotal, validationError }) => {
+const TableForm = ({ list, setList, total, setTotal }) => {
   const [item, setItem] = useState('');
   const [description, setDescription] = useState('');
   const [cost, setCost] = useState('');
@@ -11,9 +12,56 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
   const tax=0.18;
   const [price, setPrice] = useState('');
   const [isEditing, setEditing] = useState(false);
+  
+  //VALIDATION STATES
+  const [tableValidationErrors, setTableValidationErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // VALIDATION SCHEMA
+  const validationTableSchema = Yup.object().shape({
+    item: Yup.string().required('Item is required'),
+    description: Yup.string().required('Description is required'),
+    cost: Yup.number('Has to be number.').required('Cost is required'),
+    quantity: Yup.number('Has to be number.').required('Quantity is required'),
+    discount: Yup.number('Has to be number.').required('Discount is required')
+  });
+
+  const validateTable = async () => {
+    try {
+      const tableData = {
+        item,
+        description,
+        cost,
+        quantity,
+        discount
+      };
+
+      await validationTableSchema.validate(tableData, { abortEarly: false });
+      // Validation successful, proceed with addItem()
+      addItem();
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const tableValidationErrors = {};
+        error.inner.forEach((e) => {
+          tableValidationErrors[e.path] = e.message;
+        });
+        // Handle validation errors, e.g., display error messages
+        console.error('Validation Error:', tableValidationErrors);
+        return tableValidationErrors;
+      }
+    }
+  };
+
+  //HANDLE SUBMIT
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const errors = await validateTable();
+    setTableValidationErrors(errors);
+  };
+
+  
+  //ADD ITEM
+  const addItem = () => {
+    console.log('handle submit')
 
     const newItems = {
       id: uuidv4(),
@@ -40,13 +88,13 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
     setEditing(false);
   };
 
-  // CALCULATE AMOUNT
+  //CALCULATE AMOUNT
   useEffect(() => {
     const calDiscount= (cost*quantity)*(discount/100)
     const disPrice = (cost * quantity)-calDiscount;
     const calTax= disPrice*0.18;
     const calculatedPrice= disPrice+calTax;
-    setPrice(calculatedPrice || 0);
+    setPrice(calculatedPrice.toFixed(2) || 0);
   }, [cost, quantity, discount]);
 
   // CALCULATE TOTAL
@@ -55,7 +103,7 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
     list.forEach((row) => {
       sum += isNaN(row.price) ? 0 : parseFloat(row.price);
     });
-    setTotal(sum);
+    setTotal(sum.toFixed(2));
   }, [list]);
 
   // DELETE
@@ -90,7 +138,7 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
             onChange={(e) => setItem(e.target.value)}
             className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.item}</p>}
+          {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.item}</p>}
         </div>
         <div className='description col-span-1'>
           <label htmlFor='description' className='block text-lg mb-2'>
@@ -104,7 +152,7 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
             onChange={(e) => setDescription(e.target.value)}
             className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.description}</p>}
+          {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.description}</p>}
         </div>
         <div className='grid grid-cols-5 gap-6 mx-auto col-span-2'>
           <div className='col-span-1'>
@@ -119,7 +167,7 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
               value={cost}
               onChange={(e) => setCost(e.target.value)}
             />
-            {validationError && <p className='text-red-500 mt-2'>{validationError.cost}</p>}
+            {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.cost}</p>}
           </div>
           <div className='col-span-1'>
             <label htmlFor='quantity' className='block text-lg mb-2'>
@@ -133,7 +181,7 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
               className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
               onChange={(e) => setQuantity(e.target.value)}
             />
-            {validationError && <p className='text-red-500 mt-2'>{validationError.quantity}</p>}
+            {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.quantity}</p>}
           </div>
           <div className='col-span-1'>
             <label htmlFor='discount' className='block text-lg mb-2'>
@@ -147,7 +195,7 @@ const TableForm = ({ list, setList, total, setTotal, validationError }) => {
               className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
               onChange={(e) => setDiscount(e.target.value)}
             />
-            {validationError && <p className='text-red-500 mt-2'>{validationError.discount}</p>}
+            {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.discount}</p>}
           </div>
           <div className='col-span-1'>
             <label htmlFor='gst' className='block text-lg mb-2'>
