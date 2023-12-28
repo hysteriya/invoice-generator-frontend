@@ -104,7 +104,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
       sum += isNaN(row.price) ? 0 : parseFloat(row.price);
     });
     setTotal(sum.toFixed(2));
-  }, [list]);
+  }, [list, setTotal]);
 
   // DELETE
   const deleteRow = (id) => {
