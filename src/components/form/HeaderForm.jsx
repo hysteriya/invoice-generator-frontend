@@ -1,11 +1,12 @@
 import React from 'react';
+import logo from './logo.png';
+
 
 const HeaderForm = ({ name, setName, validationError }) => {
   return (
     <div className="bg-gray-100 p-8 rounded-lg shadow-md text-center">
+      <img src={logo} alt='Logo' className='mx-auto mb-8'></img>
       <h1 className='text-3xl font-bold text-gray-700 mb-4'>Invoice Generator</h1>
-      <img src='.../public/logo.svg' alt='Logo' className='mx-auto mb-8'></img>
-
       <div className='flex flex-col items-center'>
         <label htmlFor='name' className='text-lg mb-2'>Enter Your Name:</label>
         <input
