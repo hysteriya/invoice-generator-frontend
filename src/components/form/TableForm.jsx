@@ -4,12 +4,13 @@ import { MdDeleteOutline, MdEdit } from 'react-icons/md';
 import * as Yup from 'yup';
 
 const TableForm = ({ list, setList, total, setTotal }) => {
+  //STATES
   const [item, setItem] = useState('');
   const [description, setDescription] = useState('');
   const [cost, setCost] = useState('');
   const [quantity, setQuantity] = useState('');
   const [discount, setDiscount] = useState('');
-  const tax=0.18;
+  const [tax, setTax]=useState('');
   const [price, setPrice] = useState('');
   const [isEditing, setEditing] = useState(false);
   
@@ -22,9 +23,12 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     description: Yup.string().required('Description is required'),
     cost: Yup.number('Has to be number.').required('Cost is required'),
     quantity: Yup.number('Has to be number.').required('Quantity is required'),
-    discount: Yup.number('Has to be number.').required('Discount is required')
+    discount: Yup.number('Has to be number.').required('Discount is required'),
+    tax: Yup.number('Has to be number.').required('Tax is required'),
+
   });
 
+  //VALIDATE TABLE FUNCTION
   const validateTable = async () => {
     try {
       const tableData = {
@@ -32,13 +36,16 @@ const TableForm = ({ list, setList, total, setTotal }) => {
         description,
         cost,
         quantity,
-        discount
+        discount,
+        tax
       };
 
       await validationTableSchema.validate(tableData, { abortEarly: false });
       // Validation successful, proceed with addItem()
       addItem();
-    } catch (error) {
+      return null;
+    } 
+    catch (error) {
       if (error instanceof Yup.ValidationError) {
         const tableValidationErrors = {};
         error.inner.forEach((e) => {
@@ -61,8 +68,10 @@ const TableForm = ({ list, setList, total, setTotal }) => {
   
   //ADD ITEM
   const addItem = () => {
+    //check if the function evokes
     console.log('handle submit')
 
+    //list of new items
     const newItems = {
       id: uuidv4(),
       item,
@@ -74,10 +83,12 @@ const TableForm = ({ list, setList, total, setTotal }) => {
       price,
     };
 
+    //adding itmes in list
     setList([...list, newItems]);
     clearForm();
   };
 
+  //clearing form once the items ae added
   const clearForm = () => {
     setItem('');
     setDescription('');
@@ -85,6 +96,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     setQuantity('');
     setDiscount('');
     setPrice('');
+    setTax('');
     setEditing(false);
   };
 
@@ -92,10 +104,10 @@ const TableForm = ({ list, setList, total, setTotal }) => {
   useEffect(() => {
     const calDiscount= (cost*quantity)*(discount/100)
     const disPrice = (cost * quantity)-calDiscount;
-    const calTax= disPrice*0.18;
+    const calTax= disPrice*(tax/100);
     const calculatedPrice= disPrice+calTax;
     setPrice(calculatedPrice.toFixed(2) || 0);
-  }, [cost, quantity, discount]);
+  }, [cost, quantity, discount, tax]);
 
   // CALCULATE TOTAL
   useEffect(() => {
@@ -121,10 +133,11 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     setQuantity(editingRow.quantity);
     setCost(editingRow.cost);
     setDiscount(editingRow.discount);
+    setTax(editingRow.tax);
   };
 
   return (
-    <div className='mx-auto my-10'>
+    <div className='mx-auto my-10 bg-gray-50 p-8 rounded-lg shadow-md'>
       <div className='grid grid-cols-2 gap-4'>
         <div className='col-span-1'>
           <label htmlFor='item' className='block text-lg mb-2'>
@@ -136,9 +149,9 @@ const TableForm = ({ list, setList, total, setTotal }) => {
             placeholder='Item'
             value={item}
             onChange={(e) => setItem(e.target.value)}
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.item ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
           />
-          {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.item}</p>}
+          
         </div>
         <div className='description col-span-1'>
           <label htmlFor='description' className='block text-lg mb-2'>
@@ -150,9 +163,9 @@ const TableForm = ({ list, setList, total, setTotal }) => {
             placeholder='Description'
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.description ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
           />
-          {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.description}</p>}
+          
         </div>
         <div className='grid grid-cols-5 gap-6 mx-auto col-span-2'>
           <div className='col-span-1'>
@@ -163,11 +176,11 @@ const TableForm = ({ list, setList, total, setTotal }) => {
               type='number'
               id='cost'
               placeholder='Cost'
-              className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+              className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.cost ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               value={cost}
               onChange={(e) => setCost(e.target.value)}
             />
-            {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.cost}</p>}
+            
           </div>
           <div className='col-span-1'>
             <label htmlFor='quantity' className='block text-lg mb-2'>
@@ -178,10 +191,10 @@ const TableForm = ({ list, setList, total, setTotal }) => {
               id='quantity'
               placeholder='Quantity'
               value={quantity}
-              className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+              className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.quantity ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               onChange={(e) => setQuantity(e.target.value)}
             />
-            {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.quantity}</p>}
+            
           </div>
           <div className='col-span-1'>
             <label htmlFor='discount' className='block text-lg mb-2'>
@@ -192,22 +205,21 @@ const TableForm = ({ list, setList, total, setTotal }) => {
               id='discount'
               placeholder='discount'
               value={discount}
-              className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+              className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.discount ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               onChange={(e) => setDiscount(e.target.value)}
-            />
-            {tableValidationErrors && <p className='text-red-500 mt-2'>{tableValidationErrors.discount}</p>}
+            /> 
           </div>
           <div className='col-span-1'>
-            <label htmlFor='gst' className='block text-lg mb-2'>
-              GST:
+            <label htmlFor='tax' className='block text-lg mb-2'>
+              Tax(%):
             </label>
             <input
               type='number'
-              id='GST'
-              placeholder='18%'
-              disabled
+              id='tax'
+              placeholder='Tax'
               value={tax}
-              className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+              className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.tax ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
+              onChange={(e) => setTax(e.target.value)}
             />
           </div>
           <div className='col-span-1'>
@@ -219,7 +231,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
               id='price'
               placeholder='Price'
               disabled
-              className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+              className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full`}
               value={price}
             />
           </div>

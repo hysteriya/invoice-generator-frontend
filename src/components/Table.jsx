@@ -1,35 +1,39 @@
-import React from 'react'
+import React from 'react';
 
-const Table = ({list, total}) => {
+const Table = ({ list, total }) => {
   return (
     <div className='my-10'>
-      <table width="100%">
-        <thead>
-          <tr className='bg-gray-100'>
-            <td>item</td>
-            <td>description</td>
-            <td>cost</td>
-            <td>qty</td>
-            <td>price</td>
+      <table className="w-full">
+        <thead className='bg-gray-100'>
+          <tr>
+            <th className='py-2 px-4'>Item</th>
+            <th className='py-2 px-4'>Description</th>
+            <th className='py-2 px-4'>Cost</th>
+            <th className='py-2 px-4'>Quantity</th>
+            <th className='py-2 px-4'>Discount</th>
+            <th className='py-2 px-4'>Tax</th>
+            <th className='py-2 px-4'>Price</th>
           </tr>
         </thead>
         <tbody>
-          {list.map(({ id, item, description, cost, quantity, price }) => (
-            <tr key={id}>
-              <td>{item}</td>
-              <td>{description}</td>
-              <td>{cost}</td>
-              <td>{quantity}</td>
-              <td>{price}</td>
+          {list.map(({ id, item, description, cost, quantity, price, discount, tax }) => (
+            <tr key={id} className='border-b'>
+              <td className='py-2 px-4'>{item}</td>
+              <td className='py-2 px-4'>{description}</td>
+              <td className='py-2 px-4'>{cost}</td>
+              <td className='py-2 px-4'>{quantity}</td>
+              <td className='py-2 px-4'>{discount}</td>
+              <td className='py-2 px-4'>{tax}</td>
+              <td className='py-2 px-4'>{price}</td>
             </tr>
-              ))}
+          ))}
         </tbody>
       </table>
-      <div>
-        <h2>{total}</h2>
+      <div className='mt-4'>
+        <h2 className='font-bold text-xl'>Total: {total}</h2>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

@@ -12,7 +12,7 @@ const DetailForm = ({
   validationError
 }) => {
   return (
-    <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8'>
+    <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md'>
       <div className='col-span-1'>
         <div className='mb-4'>
           <label htmlFor='address' className='block text-lg mb-2'>Enter Your Address:</label>
@@ -26,6 +26,19 @@ const DetailForm = ({
             onChange={(e) => setAddress(e.target.value)}
           />
           {validationError && <p className='text-red-500 mt-2'>{validationError.address}</p>}
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='dateIssue' className='block text-lg mb-2'>Enter Your Issue Date:</label>
+          <input
+            type='date'
+            id='dateIssue'
+            name='dateIssue'
+            placeholder='Issue Date'
+            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            value={dateIssue}
+            onChange={(e) => setDateIssue(e.target.value)}
+          />
+          {validationError && <p className='text-red-500 mt-2'>{validationError.dateIssue}</p>}
         </div>
       </div>
       <div className='col-span-1'>
@@ -54,19 +67,6 @@ const DetailForm = ({
             onChange={(e) => setDateDue(e.target.value)}
           />
           {validationError && <p className='text-red-500 mt-2'>{validationError.dateDue}</p>}
-        </div>
-        <div className='mb-4'>
-          <label htmlFor='dateIssue' className='block text-lg mb-2'>Enter Your Issue Date:</label>
-          <input
-            type='date'
-            id='dateIssue'
-            name='dateIssue'
-            placeholder='Issue Date'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
-            value={dateIssue}
-            onChange={(e) => setDateIssue(e.target.value)}
-          />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.dateIssue}</p>}
         </div>
       </div>
     </div>
