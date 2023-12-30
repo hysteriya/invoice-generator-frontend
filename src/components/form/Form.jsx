@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 
 const Form = ({ 
   //PROPS
-  setShowInvoice, name, setName,
+  setShowInvoice, name, setName, logo, setLogo,
   address, setAddress, invoice, setInvoice, dateDue, setDateDue, dateIssue, setDateIssue,
   invoiceName,
   invoiceAddress,
@@ -113,7 +113,7 @@ const Form = ({
   return (
     <>
       <form type='submit' onSubmit={handleSubmit}>
-        <HeaderForm name={name} setName={setName} validationError={validationErrors.name} />
+        <HeaderForm name={name} setName={setName} validationError={validationErrors.name} logo={logo} setLogo={setLogo} />
         <DetailForm
           address={address}
           setAddress={setAddress}

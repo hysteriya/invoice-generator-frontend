@@ -11,6 +11,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
   const [quantity, setQuantity] = useState('');
   const [discount, setDiscount] = useState('');
   const [tax, setTax]=useState('');
+  const [taxNumber, setTaxNumber]=useState('');
   const [price, setPrice] = useState('');
   const [isEditing, setEditing] = useState(false);
   
@@ -80,6 +81,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
       quantity,
       discount,
       tax,
+      taxNumber,
       price,
     };
 
@@ -97,6 +99,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     setDiscount('');
     setPrice('');
     setTax('');
+    setTaxNumber('');
     setEditing(false);
   };
 
@@ -105,6 +108,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     const calDiscount= (cost*quantity)*(discount/100)
     const disPrice = (cost * quantity)-calDiscount;
     const calTax= disPrice*(tax/100);
+    setTaxNumber(calTax.toFixed(2) || 0);
     const calculatedPrice= disPrice+calTax;
     setPrice(calculatedPrice.toFixed(2) || 0);
   }, [cost, quantity, discount, tax]);
@@ -167,7 +171,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
           />
           
         </div>
-        <div className='grid grid-cols-5 gap-6 mx-auto col-span-2'>
+        <div className='grid grid-cols-6 gap-6 mx-auto col-span-2'>
           <div className='col-span-1'>
             <label htmlFor='cost' className='block text-lg mb-2'>
               Cost:
@@ -223,6 +227,19 @@ const TableForm = ({ list, setList, total, setTotal }) => {
             />
           </div>
           <div className='col-span-1'>
+            <label htmlFor='taxNumber' className='block text-lg mb-2'>
+              Tax:
+            </label>
+            <input
+              type='number'
+              id='taxnumber'
+              placeholder='tax'
+              disabled
+              className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full`}
+              value={taxNumber}
+            />
+          </div>
+          <div className='col-span-1'>
             <label htmlFor='price' className='block text-lg mb-2'>
               Price:
             </label>
@@ -242,7 +259,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
             onClick={handleSubmit}
             className='bg-blue-500 font-bold py-2 px-5 rounded shadow border-2 border-blue-500 hover:bg-blue-400 transition-all duration-300'
           >
-            {isEditing ? 'Edit Row Item' : 'Add Table Item'}
+            {isEditing ? 'Edit Item' : 'Add Item'}
           </button>
         </div>
       </div>
@@ -254,21 +271,23 @@ const TableForm = ({ list, setList, total, setTotal }) => {
             <td>Description</td>
             <td>Cost</td>
             <td>Quantity</td>
-            <td>Discount</td>
+            <td>Discount%</td>
+            <td>Tax%</td>
             <td>Tax</td>
             <td>Price</td>
             <td>Actions</td>
           </tr>
         </thead>
         <tbody>
-          {list.map(({ id, item, description, cost, quantity, price, discount }) => (
+          {list.map(({ id, item, description, cost, quantity, price, discount, tax, taxNumber }) => (
             <tr key={id}>
               <td>{item}</td>
               <td>{description}</td>
               <td>{cost}</td>
               <td>{quantity}</td>
-              <td>{discount}</td>
-              <td>{tax}</td>
+              <td>{discount}%</td>
+              <td>{tax}%</td>
+              <td className='taxNumber'>{taxNumber}</td>
               <td className='price'>{price}</td>
               <td>
                 <button onClick={() => deleteRow(id)}>

@@ -13,6 +13,7 @@ function App() {
 
   // STATE VARIABLES
   const [name, setName] = useState("");
+  const [logo, setLogo]=useState();
 
   const [address, setAddress] = useState("");
   const [invoice, setInvoice] = useState("");
@@ -43,11 +44,14 @@ function App() {
 
 
   return (
-    <div className="App m-5 p-5 xl:max-w-4xl xl:mx-auto bg-slate-300 rounded shadow">
+    <div className="App m-5 p-5 
+    xl:max-w-6xl xl:mx-auto 
+    bg-slate-300 rounded shadow">
       {showInvoice ? //IF SHOWINVOICE IS TRUE: on successfull validation of form
         <div>
           <Header 
-          name={name} />
+          name={name}
+          logo={logo} />
           
           <Details 
           address={address}
@@ -81,6 +85,8 @@ function App() {
         <Form setShowInvoice={setShowInvoice} 
           name={name}
           setName={setName}
+          logo={logo}
+          setLogo={setLogo}
 
           address={address}
           setAddress={setAddress}
