@@ -38,6 +38,7 @@ function App() {
   const [list, setList]= useState([]);
   const [total, setTotal]=useState(0);
   const [taxTotal, setTaxTotal]=useState(0);
+  const [subTotal, setSubTotal]=useState(0);
 
   const [notes, setNotes]=useState('');
 
@@ -79,7 +80,8 @@ function App() {
           price={price}
           list={list}
           total={total}
-          taxTotal={taxTotal}/>
+          taxTotal={taxTotal}
+          subTotal={subTotal}/>
 
           <Notes setShowInvoice={setShowInvoice}
           notes={notes} />
@@ -134,6 +136,8 @@ function App() {
           setTotal={setTotal}
           taxTotal={taxTotal}
           setTaxTotal={setTaxTotal}
+          subTotal={subTotal}
+          setSubTotal={setSubTotal}
 
           notes={notes}
           setNotes={setNotes}/>

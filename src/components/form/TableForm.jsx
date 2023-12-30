@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
 import * as Yup from 'yup';
 
-const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal }) => {
+const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal }) => {
   //STATES
   const [item, setItem] = useState('');
   const [description, setDescription] = useState('');
@@ -120,6 +120,15 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal }) =>
     });
     setTotal(sum.toFixed(2));
   }, [list, setTotal]);
+
+  // CALCULATE SUBTOTAL
+  useEffect(() => {
+    let st = 0;
+    list.forEach((row) => {
+      st += isNaN(row.cost) ? 0 : parseFloat(row.cost);
+    });
+    setSubTotal(st.toFixed(2));
+  }, [list, setSubTotal]);
 
   //CALCULATE TAX
   useEffect(()=>{
@@ -312,6 +321,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal }) =>
         </tbody>
       </table>
       <div className='mt-4'>
+        <h2>Sub Total:{subTotal}</h2>
         <h2>Tax:{taxTotal}</h2>
         <h2>Total: {total}</h2>
       </div>

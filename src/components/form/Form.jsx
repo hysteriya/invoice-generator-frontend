@@ -30,7 +30,7 @@ const Form = ({
   setCountry,
   setIfsc,
 
-  item, setItem, description, setDescription, cost, setCost, quantity, setQuantity, price, setPrice, list, setList, total, setTotal, taxTotal, setTaxTotal,
+  item, setItem, description, setDescription, cost, setCost, quantity, setQuantity, price, setPrice, list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal,
 
   notes, setNotes
   }) => {
@@ -160,6 +160,8 @@ const Form = ({
           //validationError={validationErrors}
           taxTotal={taxTotal}
           setTaxTotal={setTaxTotal}
+          subTotal={subTotal}
+          setSubTotal={setSubTotal}
            
           />
         <NotesForm 
