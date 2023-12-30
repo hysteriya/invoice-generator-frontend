@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Table = ({ list, total }) => {
+const Table = ({ list, total, taxTotal }) => {
   return (
     <div className='my-10'>
       <table className="w-full">
@@ -30,6 +30,7 @@ const Table = ({ list, total }) => {
         </tbody>
       </table>
       <div className='mt-4'>
+        <h2 className='font-bold text-xl'>Tax: {taxTotal}</h2>
         <h2 className='font-bold text-xl'>Total: {total}</h2>
       </div>
     </div>

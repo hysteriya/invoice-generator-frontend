@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
 import * as Yup from 'yup';
 
-const TableForm = ({ list, setList, total, setTotal }) => {
+const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal }) => {
   //STATES
   const [item, setItem] = useState('');
   const [description, setDescription] = useState('');
@@ -26,7 +26,6 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     quantity: Yup.number('Has to be number.').required('Quantity is required'),
     discount: Yup.number('Has to be number.').required('Discount is required'),
     tax: Yup.number('Has to be number.').required('Tax is required'),
-
   });
 
   //VALIDATE TABLE FUNCTION
@@ -121,6 +120,15 @@ const TableForm = ({ list, setList, total, setTotal }) => {
     });
     setTotal(sum.toFixed(2));
   }, [list, setTotal]);
+
+  //CALCULATE TAX
+  useEffect(()=>{
+    let t=0;
+    list.forEach((row)=>{
+      t +=isNaN(row.taxNumber) ? 0 : parseFloat(row.taxNumber);
+    });
+    setTaxTotal(t.toFixed(2));
+  }, [list, setTaxTotal])
 
   // DELETE
   const deleteRow = (id) => {
@@ -304,6 +312,7 @@ const TableForm = ({ list, setList, total, setTotal }) => {
         </tbody>
       </table>
       <div className='mt-4'>
+        <h2>Tax:{taxTotal}</h2>
         <h2>Total: {total}</h2>
       </div>
     </div>

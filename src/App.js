@@ -37,6 +37,7 @@ function App() {
   const [price, setPrice] = useState("");
   const [list, setList]= useState([]);
   const [total, setTotal]=useState(0);
+  const [taxTotal, setTaxTotal]=useState(0);
 
   const [notes, setNotes]=useState('');
 
@@ -77,11 +78,14 @@ function App() {
           quantity={quantity}
           price={price}
           list={list}
-          total={total}/>
+          total={total}
+          taxTotal={taxTotal}/>
+
           <Notes setShowInvoice={setShowInvoice}
           notes={notes} />
           {/* <Footer /> */}
         </div> : //OR SHOW THE FORM
+
         <Form setShowInvoice={setShowInvoice} 
           name={name}
           setName={setName}
@@ -128,7 +132,9 @@ function App() {
           setList={setList}
           total={total}
           setTotal={setTotal}
-          
+          taxTotal={taxTotal}
+          setTaxTotal={setTaxTotal}
+
           notes={notes}
           setNotes={setNotes}/>
       }
