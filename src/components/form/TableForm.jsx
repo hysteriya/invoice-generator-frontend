@@ -195,6 +195,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             </label>
             <input
               type='number'
+              min='0'
               id='cost'
               placeholder='Cost'
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.cost ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
@@ -209,6 +210,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             </label>
             <input
               type='number'
+              min='0'
               id='quantity'
               placeholder='Quantity'
               value={quantity}
@@ -223,6 +225,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             </label>
             <input
               type='number'
+              min='0'
               id='discount'
               placeholder='discount'
               value={discount}
@@ -236,6 +239,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             </label>
             <input
               type='number'
+              min='0'
               id='tax'
               placeholder='Tax'
               value={tax}
@@ -249,6 +253,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             </label>
             <input
               type='number'
+              min='0'
               id='taxnumber'
               placeholder='tax'
               disabled
@@ -276,7 +281,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             onClick={handleSubmit}
             className='bg-blue-500 font-bold py-2 px-5 rounded shadow border-2 border-blue-500 hover:bg-blue-400 transition-all duration-300'
           >
-            {isEditing ? 'Edit Item' : 'Add Item'}
+            {isEditing ? 'Update Item' : 'Add Item'}
           </button>
         </div>
       </div>
@@ -320,10 +325,10 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
           ))}
         </tbody>
       </table>
-      <div className='mt-4'>
-        <h2>Sub Total:{subTotal}</h2>
-        <h2>Tax:{taxTotal}</h2>
-        <h2>Total: {total}</h2>
+      <div className='mt-4 text-right'>
+        <h4>Sub Total:{subTotal}</h4>
+        <h4>Tax:{taxTotal}</h4>
+        <h2 className='font-bold'>Total: {total}</h2>
       </div>
     </div>
   );

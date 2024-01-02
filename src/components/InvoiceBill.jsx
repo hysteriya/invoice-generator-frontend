@@ -12,15 +12,15 @@ const InvoiceBill = ({
 }) => {
   return (
     <div>
-      <div className="invoice-bill flex justify-between my-9">
-        <div className="invoice w-1/2">
+      <div className="invoice-bill flex justify-between my-10">
+        <div className="invoice w-3/4">
           <h2 className="font-bold mb-2">Invoice to:</h2>
           <p className="mb-2">{invoiceName}</p>
-          <p className="mb-2">{invoiceAddress}</p>
+          <p className="mb-2 whitespace-pre-line max-w-[150px]">{invoiceAddress}</p>
           <p className="mb-2">{invoicePhone}</p>
           <p>{invoiceMail}</p>
         </div>
-        <div className="bill w-1/2 text-right">
+        <div className="bill w-1/2">
           <h2 className="font-bold mb-2">Bill to:</h2>
           <p className="mb-2">
             <span className="block">Total Due: {totalDue}</span>

@@ -12,7 +12,7 @@ const NotesForm = ({ notes, setNotes, validationError }) => {
           type='text'
           id='text'
           name='text'
-          placeholder='Name'
+          placeholder='Notes'
           className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500'
           value={notes}
           onChange={(e) => setNotes(e.target.value)}

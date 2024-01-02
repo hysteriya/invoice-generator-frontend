@@ -29,9 +29,9 @@ const Table = ({ list, total, taxTotal, subTotal }) => {
           ))}
         </tbody>
       </table>
-      <div className='mt-4'>
-        <h2 className='text-xl'>SubTotal: {subTotal}</h2>
-        <h2 className='text-xl'>Tax: {taxTotal}</h2>
+      <div className='mt-4 text-right'>
+        <h4 className='text'>SubTotal: {subTotal}</h4>
+        <h4 className='text'>Tax: {taxTotal}</h4>
         <h2 className='font-bold text-xl'>Total: {total}</h2>
       </div>
     </div>
