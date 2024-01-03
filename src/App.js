@@ -80,6 +80,10 @@ function App() {
     }
   };
 
+  //PRINT
+
+  
+
   
 
 
@@ -87,6 +91,8 @@ function App() {
     <div className="App flex">
       <Sidebar
         downloadPDF={downloadPDF}
+        //handlePrint={handlePrint}
+        pdfRef={pdfRef}
         showInvoice={showInvoice}
         setShowInvoice={setShowInvoice}
         name={name}
@@ -144,7 +150,7 @@ function App() {
         validationErrors={validationErrors}
         setValidationErrors={setValidationErrors} />
       {showInvoice ? //IF SHOWINVOICE IS TRUE: on successfull validation of form
-        <div className="m-7 p-10 xl:max-w-5xl xl:mx-auto bg-slate-300 rounded shadow" ref={pdfRef}>
+        <div className="m-5 p-5 xl:max-w-6xl xl:mx-auto bg-slate-300 rounded shadow" ref={pdfRef}>
           <div>
             {/* <Header
               name={name}

@@ -157,6 +157,22 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
     setTax(editingRow.tax);
   };
 
+  //INPUTCHANGE
+  const handleInputChange=(field, valueSetter)=>(e)=>{
+    const value = e.target.value;
+    valueSetter(value);
+    setTableValidationErrors((prevErrors)=>({...prevErrors, 
+    [field]:undefined,}))
+  }
+
+  //CHECK APHABET
+  function check_apha(event) {
+    var key = event.key;
+    if (!((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key === 'Backspace')) {
+      event.preventDefault();
+    }
+  }
+
   return (
     <div className='mx-auto my-10 bg-gray-50 p-8 rounded-lg shadow-md'>
       <div className='grid grid-cols-2 gap-4'>
@@ -168,8 +184,9 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             type='text'
             id='item'
             placeholder='Item'
+            onKeyDown={check_apha}
             value={item}
-            onChange={(e) => setItem(e.target.value)}
+            onChange={handleInputChange('item', setItem)}
             className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.item ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
           />
           
@@ -183,7 +200,8 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
             id='description'
             placeholder='Description'
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onKeyDown={check_apha}
+            onChange={handleInputChange('description', setDescription)}
             className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.description ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
           />
           
@@ -200,7 +218,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               placeholder='Cost'
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.cost ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               value={cost}
-              onChange={(e) => setCost(e.target.value)}
+              onChange={handleInputChange('cost', setCost)}
             />
             
           </div>
@@ -215,7 +233,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               placeholder='Quantity'
               value={quantity}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.quantity ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={handleInputChange('quantity', setQuantity)}
             />
             
           </div>
@@ -230,7 +248,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               placeholder='discount'
               value={discount}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.discount ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
-              onChange={(e) => setDiscount(e.target.value)}
+              onChange={handleInputChange('discount', setDiscount)}
             /> 
           </div>
           <div className='col-span-1'>
@@ -244,7 +262,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               placeholder='Tax'
               value={tax}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.tax ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
-              onChange={(e) => setTax(e.target.value)}
+              onChange={handleInputChange('tax', setTax)}
             />
           </div>
           <div className='col-span-1'>

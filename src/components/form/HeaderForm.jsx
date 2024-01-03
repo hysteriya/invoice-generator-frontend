@@ -1,6 +1,13 @@
 import React from 'react';
 
-const HeaderForm = ({ name, setName, logo, setLogo, validationError }) => {
+const HeaderForm = ({ name, setName, logo, setLogo, validationError, setValidationErrors }) => {
+  function check_apha(event) {
+    var key = event.key;
+    if (!((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key === 'Backspace')) {
+      event.preventDefault();
+    }
+  }
+  
   return (
     <div className="bg-gray-100 p-8 rounded-lg shadow-md text-center">
       <h1 className='text-3xl font-bold text-gray-700 mb-4'>Invoice Generator</h1>
@@ -12,9 +19,16 @@ const HeaderForm = ({ name, setName, logo, setLogo, validationError }) => {
             id='name'
             name='name'
             placeholder='Name'
+            onKeyDown={check_apha}
             className={`px-4 py-2 border ${validationError && validationError.name ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500`}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              // Clear validation error for 'name' field
+              setValidationErrors((prevErrors) => ({
+                  ...prevErrors,
+                  name: undefined,
+              }));}}
           />
           {validationError &&  validationError.name && <p className='text-red-500 mt-2'>{validationError.name}</p>}
         </div>

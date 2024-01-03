@@ -9,7 +9,8 @@ const DetailForm = ({
   setDateIssue,
   dateDue,
   setDateDue,
-  validationError
+  validationError,
+  setValidationErrors
 }) => {
   return (
     <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md'>
@@ -21,11 +22,18 @@ const DetailForm = ({
             id='address'
             name='address'
             placeholder='Address'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.address ? 'border-red-500' : ''}`}
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => {
+              setAddress(e.target.value);
+              // Clear validation error for 'address' field
+              setValidationErrors((prevErrors) => ({
+                ...prevErrors,
+                address: undefined,
+              }));
+            }}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.address}</p>}
+          {validationError && validationError.address && <p className='text-red-500 mt-2'>{validationError.address}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='dateIssue' className='block text-lg mb-2'>Enter Your Issue Date:</label>
@@ -34,26 +42,41 @@ const DetailForm = ({
             id='dateIssue'
             name='dateIssue'
             placeholder='Issue Date'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.dateIssue ? 'border-red-500' : ''}`}
             value={dateIssue}
-            onChange={(e) => setDateIssue(e.target.value)}
+            onChange={(e) => {
+              setDateIssue(e.target.value);
+              // Clear validation error for 'dateIssue' field
+              setValidationErrors((prevErrors) => ({
+                ...prevErrors,
+                dateIssue: undefined,
+              }));
+            }}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.dateIssue}</p>}
+          {validationError && validationError.dateIssue && <p className='text-red-500 mt-2'>{validationError.dateIssue}</p>}
         </div>
       </div>
       <div className='col-span-1'>
         <div className='mb-4'>
           <label htmlFor='invoice' className='block text-lg mb-2'>Enter Your Invoice Number:</label>
           <input
-            type='text'
+            type='number'
+            min='0'
             id='invoice'
             name='invoice'
             placeholder='Invoice Number'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoice ? 'border-red-500' : ''}`}
             value={invoice}
-            onChange={(e) => setInvoice(e.target.value)}
+            onChange={(e) => {
+              setInvoice(e.target.value);
+              // Clear validation error for 'invoice' field
+              setValidationErrors((prevErrors) => ({
+                ...prevErrors,
+                invoice: undefined,
+              }));
+            }}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.invoice}</p>}
+          {validationError && validationError.invoice && <p className='text-red-500 mt-2'>{validationError.invoice}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='dateDue' className='block text-lg mb-2'>Enter Your Due Date:</label>
@@ -62,11 +85,18 @@ const DetailForm = ({
             id='dateDue'
             name='dateDue'
             placeholder='Due Date'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.dateDue ? 'border-red-500' : ''}`}
             value={dateDue}
-            onChange={(e) => setDateDue(e.target.value)}
+            onChange={(e) => {
+              setDateDue(e.target.value);
+              // Clear validation error for 'dateDue' field
+              setValidationErrors((prevErrors) => ({
+                ...prevErrors,
+                dateDue: undefined,
+              }));
+            }}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.dateDue}</p>}
+          {validationError && validationError.dateDue && <p className='text-red-500 mt-2'>{validationError.dateDue}</p>}
         </div>
       </div>
     </div>

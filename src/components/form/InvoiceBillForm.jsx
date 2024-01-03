@@ -18,8 +18,27 @@ const InvoiceBillForm = ({
   setBankName,
   setCountry,
   setIfsc,
-  validationError
+  validationError, setValidationErrors
 }) => {
+  const handleInputChange = (fieldName, valueSetter) => (e) => {
+    const value = e.target.value;
+    valueSetter(value);
+
+    // Clear validation error for the specific field
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: undefined,
+    }));
+  };
+
+  //CHECK APHABET
+  function check_apha(event) {
+    var key = event.key;
+    if (!((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key === 'Backspace')) {
+      event.preventDefault();
+    }
+  }
+
   return (
     <div className='grid grid-cols-2 gap-8 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8'>
       <section className='invoice col-span-1'>
@@ -30,11 +49,12 @@ const InvoiceBillForm = ({
             id='invoiceName'
             name='invoiceName'
             placeholder='Name'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            onKeyDown={check_apha}
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoiceName ? 'border-red-500' : ''}`}
             value={invoiceName}
-            onChange={(e) => setInvoiceName(e.target.value)}
+            onChange={handleInputChange('invoiceName', setInvoiceName)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.invoiceName}</p>}
+          {validationError && validationError.invoiceName && <p className='text-red-500 mt-2'>{validationError.invoiceName}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='invoiceAddress' className='block text-lg mb-2'>Enter Invoice Address:</label>
@@ -43,24 +63,26 @@ const InvoiceBillForm = ({
             id='invoiceAddress'
             name='invoiceAddress'
             placeholder='Address'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoiceAddress ? 'border-red-500' : ''}`}
             value={invoiceAddress}
-            onChange={(e) => setInvoiceAddress(e.target.value)}
+            onChange={handleInputChange('invoiceAddress', setInvoiceAddress)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.invoiceAddress}</p>}
+          {validationError && validationError.invoiceAddress && <p className='text-red-500 mt-2'>{validationError.invoiceAddress}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='invoicePhone' className='block text-lg mb-2'>Enter Invoice Phone:</label>
           <input
-            type='number'
+            type='tel'
             id='invoicePhone'
             name='invoicePhone'
             placeholder='Number'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            pattern="[0-9]{10}"
+            maxLength='10'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoicePhone ? 'border-red-500' : ''}`}
             value={invoicePhone}
-            onChange={(e) => setInvoicePhone(e.target.value)}
+            onChange={handleInputChange('invoicePhone', setInvoicePhone)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.invoicePhone}</p>}
+          {validationError && validationError.invoicePhone && <p className='text-red-500 mt-2'>{validationError.invoicePhone}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='invoiceMail' className='block text-lg mb-2'>Enter Invoice Email:</label>
@@ -69,11 +91,11 @@ const InvoiceBillForm = ({
             id='invoiceMail'
             name='invoiceMail'
             placeholder='Mail'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoiceMail ? 'border-red-500' : ''}`}
             value={invoiceMail}
-            onChange={(e) => setInvoiceMail(e.target.value)}
+            onChange={handleInputChange('invoiceMail', setInvoiceMail)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.invoiceMail}</p>}
+          {validationError && validationError.invoiceMail && <p className='text-red-500 mt-2'>{validationError.invoiceMail}</p>}
         </div>
       </section>
       <section className='bill col-span-1'>
@@ -81,14 +103,15 @@ const InvoiceBillForm = ({
           <label htmlFor='totalDue' className='block text-lg mb-2'>Enter Total Due:</label>
           <input
             type='number'
+            min='0'
             id='totalDue'
             name='totalDue'
             placeholder='Due'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.totalDue ? 'border-red-500' : ''}`}
             value={totalDue}
-            onChange={(e) => setTotalDue(e.target.value)}
+            onChange={handleInputChange('totalDue', setTotalDue)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.totalDue}</p>}
+          {validationError && validationError.totalDue && <p className='text-red-500 mt-2'>{validationError.totalDue}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='bankName' className='block text-lg mb-2'>Enter Bank Name:</label>
@@ -97,11 +120,12 @@ const InvoiceBillForm = ({
             id='bankName'
             name='bankName'
             placeholder='Bank Name'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            onKeyDown={check_apha}
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.bankName ? 'border-red-500' : ''}`}
             value={bankName}
-            onChange={(e) => setBankName(e.target.value)}
+            onChange={handleInputChange('bankName', setBankName)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.bankName}</p>}
+          {validationError && validationError.bankName && <p className='text-red-500 mt-2'>{validationError.bankName}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='country' className='block text-lg mb-2'>Enter Country:</label>
@@ -110,24 +134,25 @@ const InvoiceBillForm = ({
             id='country'
             name='country'
             placeholder='Country'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.country ? 'border-red-500' : ''}`}
             value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            onChange={handleInputChange('country', setCountry)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.country}</p>}
+          {validationError && validationError.country && <p className='text-red-500 mt-2'>{validationError.country}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='ifsc' className='block text-lg mb-2'>Enter IFSC:</label>
           <input
-            type='text'
+            type='number'
+            min='0'
             id='ifsc'
             name='ifsc'
             placeholder='IFSC'
-            className='px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full'
+            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.ifsc ? 'border-red-500' : ''}`}
             value={ifsc}
-            onChange={(e) => setIfsc(e.target.value)}
+            onChange={handleInputChange('ifsc', setIfsc)}
           />
-          {validationError && <p className='text-red-500 mt-2'>{validationError.ifsc}</p>}
+          {validationError && validationError.ifsc && <p className='text-red-500 mt-2'>{validationError.ifsc}</p>}
         </div>
       </section>
     </div>

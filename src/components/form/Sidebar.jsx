@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import * as Yup from 'yup';
-// import ReactToPrint from 'react-to-print';
+import ReactToPrint from 'react-to-print';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -17,19 +17,19 @@ const Sidebar = ({ showInvoice,
     ifsc,
     item, description, cost, quantity,
     notes, setNotes,
-    validationErrors, setValidationErrors, downloadPDF }) => {
+    validationErrors, setValidationErrors, downloadPDF, pdfRef }) => {
 
 
 
-    // const handlePrint = () => {
-    //     if (componentRef) {
-    //         componentRef.current?.print();
-    //     }
-    // };
 
     const handlePrint = () => {
-        window.print();
+        if (pdfRef) {
+            pdfRef.current.print();
+        }
     };
+    // const handlePrint = () => {
+    //     window.print();
+    // };
 
     const handleButtonClick = () => {
         setShowInvoice(false);
@@ -112,27 +112,29 @@ const Sidebar = ({ showInvoice,
 
 
 
+
+
     return (
         <aside className="h-screen">
             <nav className="h-full flex flex-col border-r shadow-sm w-60 bg-gray-200 fixed right-0 top-0">
                 <h1 className="font-bold text-center my-6 text-xl">ACTIONS</h1>
                 <div className="p-4 flex flex-col items-center">
-                    {/* <ReactToPrint trigger={()=>(
+                    <ReactToPrint trigger={() => (
                         <button
-                        className="btn btn-action bg-gray-500 text-white font-bold py-2 px-8 rounded shadow border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300 mb-4 w-40"
-                        onClick={handlePrint}
-                    >
-                        Print
-                    </button>
+                            className="btn btn-action bg-gray-500 text-white font-bold py-2 px-8 rounded shadow border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300 mb-4 w-40"
+                            onClick={handlePrint}
+                        >
+                            Print
+                        </button>
                     )}
-                    content={()=>componentRef.current}
-                    /> */}
-                    <button
+                        content={() => pdfRef.current}
+                    />
+                    {/* <button
                         className="btn btn-action bg-gray-500 text-white font-bold py-2 px-8 rounded shadow border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300 mb-4 w-40"
                         onClick={handlePrint}
                     >
                         Print
-                    </button>
+                    </button> */}
 
                     {showInvoice ?
                         <>

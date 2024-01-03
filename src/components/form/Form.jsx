@@ -33,7 +33,7 @@ const Form = ({
   item, setItem, description, setDescription, cost, setCost, quantity, setQuantity, price, setPrice, list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal,
 
   notes, setNotes,
-  validationErrors,
+  validationErrors, setValidationErrors
   }) => {
 
   // //VALIDATION STATES
@@ -116,7 +116,7 @@ const Form = ({
       <form type='submit' 
       //onSubmit={handleSubmit}
       >
-        <HeaderForm name={name} setName={setName} validationError={validationErrors} logo={logo} setLogo={setLogo} />
+        <HeaderForm name={name} setName={setName} validationError={validationErrors} logo={logo} setLogo={setLogo} setValidationErrors={setValidationErrors} />
         <DetailForm
           address={address}
           setAddress={setAddress}
@@ -126,7 +126,8 @@ const Form = ({
           setDateIssue={setDateIssue}
           dateDue={dateDue}
           setDateDue={setDateDue}
-          validationError={validationErrors} />
+          validationError={validationErrors}
+          setValidationErrors={setValidationErrors} />
         <InvoiceBillForm
           invoiceName={invoiceName}
           invoiceAddress={invoiceAddress}
@@ -144,7 +145,8 @@ const Form = ({
           setBankName={setBankName}
           setCountry={setCountry}
           setIfsc={setIfsc}
-          validationError={validationErrors} />
+          validationError={validationErrors}
+          setValidationErrors={setValidationErrors} />
         <TableForm
           item={item}
           setItem={setItem}
