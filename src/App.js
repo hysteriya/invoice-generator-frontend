@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Details from "./components/Details";
 // import Footer from "./components/Footer";
-import Header from "./components/Header";
+//import Header from "./components/Header";
 import InvoiceBill from "./components/InvoiceBill";
 import Notes from "./components/Notes";
 import Table from "./components/Table";

@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import ReactToPrint from 'react-to-print';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+// import html2canvas from 'html2canvas';
+// import jsPDF from 'jspdf';
 
 const Sidebar = ({ showInvoice,
     setShowInvoice, name,
