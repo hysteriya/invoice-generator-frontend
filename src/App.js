@@ -10,6 +10,7 @@ import Sidebar from "./components/form/Sidebar";
 // import ReactToPrint from 'react-to-print';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { validate } from "uuid";
 
 
 function App() {
@@ -80,18 +81,64 @@ function App() {
     }
   };
 
-  //PRINT
+  //CHECK NUMBER
+  function check_numeric(event) {
+    var key = event.key;
+    if (!((key >= '0' && key <= '9') || key === 'Backspace')) {
+      event.preventDefault();
+    }
+  }
 
-  
+  //CHECK EMAIL
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
 
-  
+  //CHECK REQUIRED
+  const requiredField = (field) => {
+    return field.trim() !== '';
+  }
+
+  // VALIDATION
+  const validateForm = () => {
+    let errors = {};
+
+    // Validate name
+    if (!requiredField(name)) {
+      errors.name = "Name is required";
+    }
+
+    // Validate email
+    if (!validateEmail(invoiceMail)) {
+      errors.invoiceMail = "Invalid email address";
+    }
+
+    // Validate other fields as needed
+
+    // Set validation errors state
+    setValidationErrors(errors);
+
+    // Check if there are any errors
+    const isValid = Object.keys(errors).length === 0;
+
+    // Return the validation result
+    return isValid;
+  };
+
+
+
+
+
+
+
+
 
 
   return (
     <div className="App flex">
       <Sidebar
         downloadPDF={downloadPDF}
-        //handlePrint={handlePrint}
         pdfRef={pdfRef}
         showInvoice={showInvoice}
         setShowInvoice={setShowInvoice}
@@ -147,14 +194,11 @@ function App() {
 
         notes={notes}
         setNotes={setNotes}
-        validationErrors={validationErrors}
-        setValidationErrors={setValidationErrors} />
+        validateForm={validateForm}
+      />
       {showInvoice ? //IF SHOWINVOICE IS TRUE: on successfull validation of form
         <div className="m-5 p-5 xl:max-w-6xl xl:mx-auto bg-slate-300 rounded shadow" ref={pdfRef}>
           <div>
-            {/* <Header
-              name={name}
-              logo={logo} /> */}
 
             <Details
               name={name}
@@ -188,7 +232,7 @@ function App() {
 
             <Notes setShowInvoice={setShowInvoice}
               notes={notes} />
-            {/* <Footer /> */}
+
           </div>
         </div>
         : //OR SHOW THE FORM
@@ -247,8 +291,8 @@ function App() {
 
             notes={notes}
             setNotes={setNotes}
-            validationErrors={validationErrors}
-            setValidationErrors={setValidationErrors} />
+            check_numeric={check_numeric}
+            validateEmail={validateEmail} />
 
         </div>
       }

@@ -10,7 +10,7 @@ const DetailForm = ({
   dateDue,
   setDateDue,
   validationError,
-  setValidationErrors
+  setValidationErrors, check_numeric
 }) => {
   return (
     <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md'>
@@ -65,6 +65,7 @@ const DetailForm = ({
             id='invoice'
             name='invoice'
             placeholder='Invoice Number'
+            onKeyDown={check_numeric}
             className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoice ? 'border-red-500' : ''}`}
             value={invoice}
             onChange={(e) => {

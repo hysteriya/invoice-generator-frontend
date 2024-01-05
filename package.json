@@ -10,7 +10,11 @@
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-international-phone": "^4.0.4",
+    "react-phone-number-input": "^3.3.8",
     "react-scripts": "5.0.1",
+    "react-select": "^5.8.0",
+    "react-select-country-list": "^2.2.3",
     "react-to-print": "^2.14.15",
     "web-vitals": "^2.1.4"
   },

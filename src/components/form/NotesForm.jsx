@@ -2,7 +2,9 @@ import React from 'react';
 
 const NotesForm = ({ notes, setNotes, validationError }) => {
   return (
-    <div className="max-w-md mx-auto">
+    <div className=""
+    //"max-w-md mx-auto"
+    >
       <div className="bg-gray-50 p-8 rounded-lg shadow-md my-8">
         <label htmlFor="text" className="text-lg mb-2 block font-semibold">
           Add Notes:

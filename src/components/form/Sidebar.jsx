@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Yup from 'yup';
+//import * as Yup from 'yup';
 import ReactToPrint from 'react-to-print';
 // import html2canvas from 'html2canvas';
 // import jsPDF from 'jspdf';
@@ -17,7 +17,7 @@ const Sidebar = ({ showInvoice,
     ifsc,
     item, description, cost, quantity,
     notes, setNotes,
-    validationErrors, setValidationErrors, downloadPDF, pdfRef }) => {
+    validationErrors, setValidationErrors, downloadPDF, pdfRef, validateForm }) => {
 
 
 
@@ -36,77 +36,88 @@ const Sidebar = ({ showInvoice,
     };
 
 
-    // VALIDATION SCHEMA
-    const validationSchema = Yup.object().shape({
-        name: Yup.string().required('Name is required'),
-        address: Yup.string().required('Address is required'),
-        invoice: Yup.string().required('Invoice is required'),
-        // Add validation rules for other fields
-        // ...
-        totalDue: Yup.number().required('Total Due is required'),
-        bankName: Yup.string().required('Bank Name is required'),
-        country: Yup.string().required('Country is required'),
-        ifsc: Yup.string().required('IFSC is required'),
-        // item: Yup.string().required('Item is required'),
-        // description: Yup.string().required('Description is required'),
-        // cost: Yup.number().required('Cost is required'),
-        // quantity: Yup.number().required('Quantity is required'),
-    });
+    // // VALIDATION SCHEMA
+    // const validationSchema = Yup.object().shape({
+    //     name: Yup.string().required('Name is required'),
+    //     address: Yup.string().required('Address is required'),
+    //     invoice: Yup.string().required('Invoice is required'),
+    //     invoiceName: Yup.string().required('Invoice Name is required'),
+    //     invoiceAddress: Yup.string().required('Invoice Address is required'),
+    //     invoicePhone: Yup.string().required('Invoice Phone is required'),
+    //     invoiceMail: Yup.string().email('Invalid Email').required('Invoice Email is required'),
 
-    const validateForm = async () => {
-        try {
-            const formData = {
-                name,
-                address,
-                invoice,
-                dateDue,
-                dateIssue,
-                invoiceName,
-                invoiceAddress,
-                invoicePhone,
-                invoiceMail,
+    //     totalDue: Yup.number().required('Total Due is required'),
+    //     bankName: Yup.string().required('Bank Name is required'),
+    //     country: Yup.string().required('Country is required'),
+    //     ifsc: Yup.string().required('IFSC is required'),
+    //     // item: Yup.string().required('Item is required'),
+    //     // description: Yup.string().required('Description is required'),
+    //     // cost: Yup.number().required('Cost is required'),
+    //     // quantity: Yup.number().required('Quantity is required'),
+    // });
 
-                totalDue,
-                bankName,
-                country,
-                ifsc,
+    // const validateForm = async () => {
+    //     try {
+    //         const formData = {
+    //             name,
+    //             address,
+    //             invoice,
+    //             dateDue,
+    //             dateIssue,
+    //             invoiceName,
+    //             invoiceAddress,
+    //             invoicePhone,
+    //             invoiceMail,
 
-                item, description, cost, quantity,
+    //             totalDue,
+    //             bankName,
+    //             country,
+    //             ifsc,
 
-                notes, setNotes,
+    //             item, description, cost, quantity,
 
-                // item,
-                // description,
-                // cost,
-                // quantity,
-            };
+    //             notes, setNotes,
 
-            await validationSchema.validate(formData, { abortEarly: false });
-            // Validation successful, proceed with other actions or set state
-            setShowInvoice(true);
-            setValidationErrors({});
+    //             // item,
+    //             // description,
+    //             // cost,
+    //             // quantity,
+    //         };
 
-        } catch (error) {
-            if (error instanceof Yup.ValidationError) {
-                const validationErrors = {};
-                error.inner.forEach((e) => {
-                    validationErrors[e.path] = e.message;
-                });
-                // Handle validation errors, e.g., display error messages
-                console.error('Validation Error:', validationErrors);
-                setValidationErrors(validationErrors);
-            }
-        }
-    };
+    //         await validationSchema.validate(formData, { abortEarly: false });
+    //         // Validation successful, proceed with other actions or set state
+    //         setShowInvoice(true);
+    //         setValidationErrors({});
+
+    //     } catch (error) {
+    //         if (error instanceof Yup.ValidationError) {
+    //             const validationErrors = {};
+    //             error.inner.forEach((e) => {
+    //                 validationErrors[e.path] = e.message;
+    //             });
+    //             // Handle validation errors, e.g., display error messages
+    //             console.error('Validation Error:', validationErrors);
+    //             setValidationErrors(validationErrors);
+    //         }
+    //     }
+    // };
 
     //PREVIEW
-    const handlePreview = async (event) => {
-        //event.preventDefault();
-        // const errors = await validateForm();
-        // setValidationErrors(errors);
-        // 
-        validateForm();
-    };
+    // const handlePreview = async (event) => {
+    //     //event.preventDefault();
+    //     // const errors = await validateForm();
+    //     // setValidationErrors(errors);
+    //     // 
+    //     validateForm();
+    // };
+
+    //PREVIEW
+    const handlePreview=()=>{
+        const isValid= validateForm();
+        if (isValid){
+            setShowInvoice(true);
+        }
+    }
 
 
 

@@ -33,7 +33,7 @@ const Form = ({
   item, setItem, description, setDescription, cost, setCost, quantity, setQuantity, price, setPrice, list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal,
 
   notes, setNotes,
-  validationErrors, setValidationErrors
+  validationErrors, setValidationErrors, check_numeric, validateEmail,
   }) => {
 
   // //VALIDATION STATES
@@ -127,7 +127,8 @@ const Form = ({
           dateDue={dateDue}
           setDateDue={setDateDue}
           validationError={validationErrors}
-          setValidationErrors={setValidationErrors} />
+          setValidationErrors={setValidationErrors}
+          check_numeric={check_numeric} />
         <InvoiceBillForm
           invoiceName={invoiceName}
           invoiceAddress={invoiceAddress}
@@ -146,7 +147,9 @@ const Form = ({
           setCountry={setCountry}
           setIfsc={setIfsc}
           validationError={validationErrors}
-          setValidationErrors={setValidationErrors} />
+          setValidationErrors={setValidationErrors}
+          check_numeric={check_numeric}
+          validationEmail={validateEmail} />
         <TableForm
           item={item}
           setItem={setItem}
@@ -167,6 +170,7 @@ const Form = ({
           setTaxTotal={setTaxTotal}
           subTotal={subTotal}
           setSubTotal={setSubTotal}
+          check_numeric={check_numeric}
            
           />
         <NotesForm 

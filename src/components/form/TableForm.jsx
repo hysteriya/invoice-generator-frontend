@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
 import * as Yup from 'yup';
 
-const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal }) => {
+const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal, check_numeric }) => {
   //STATES
   const [item, setItem] = useState('');
   const [description, setDescription] = useState('');
@@ -216,6 +216,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               min='0'
               id='cost'
               placeholder='Cost'
+              onKeyDown={check_numeric}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.cost ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               value={cost}
               onChange={handleInputChange('cost', setCost)}
@@ -231,6 +232,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               min='0'
               id='quantity'
               placeholder='Quantity'
+              onKeyDown={check_numeric}
               value={quantity}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.quantity ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               onChange={handleInputChange('quantity', setQuantity)}
@@ -246,6 +248,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               min='0'
               id='discount'
               placeholder='discount'
+              onKeyDown={check_numeric}
               value={discount}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.discount ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               onChange={handleInputChange('discount', setDiscount)}
@@ -260,6 +263,7 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
               min='0'
               id='tax'
               placeholder='Tax'
+              onKeyDown={check_numeric}
               value={tax}
               className={`px-4 py-2 border ${tableValidationErrors && tableValidationErrors.tax ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500 w-full`}
               onChange={handleInputChange('tax', setTax)}

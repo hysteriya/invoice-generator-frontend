@@ -1,6 +1,8 @@
 import React from 'react';
 
 const HeaderForm = ({ name, setName, logo, setLogo, validationError, setValidationErrors }) => {
+
+  
   function check_apha(event) {
     var key = event.key;
     if (!((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key === 'Backspace')) {
