@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteOutline, MdEdit } from 'react-icons/md';
-import * as Yup from 'yup';
 
 const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subTotal, setSubTotal, check_numeric }) => {
   //STATES
@@ -18,51 +17,52 @@ const TableForm = ({ list, setList, total, setTotal, taxTotal, setTaxTotal, subT
   //VALIDATION STATES
   const [tableValidationErrors, setTableValidationErrors] = useState({});
 
-  // VALIDATION SCHEMA
-  const validationTableSchema = Yup.object().shape({
-    item: Yup.string().required('Item is required'),
-    description: Yup.string().required('Description is required'),
-    cost: Yup.number('Has to be number.').required('Cost is required'),
-    quantity: Yup.number('Has to be number.').required('Quantity is required'),
-    discount: Yup.number('Has to be number.').required('Discount is required'),
-    tax: Yup.number('Has to be number.').required('Tax is required'),
-  });
 
-  //VALIDATE TABLE FUNCTION
-  const validateTable = async () => {
-    try {
-      const tableData = {
-        item,
-        description,
-        cost,
-        quantity,
-        discount,
-        tax
-      };
-
-      await validationTableSchema.validate(tableData, { abortEarly: false });
-      // Validation successful, proceed with addItem()
-      addItem();
-      return null;
-    } 
-    catch (error) {
-      if (error instanceof Yup.ValidationError) {
-        const tableValidationErrors = {};
-        error.inner.forEach((e) => {
-          tableValidationErrors[e.path] = e.message;
-        });
-        // Handle validation errors, e.g., display error messages
-        console.error('Validation Error:', tableValidationErrors);
-        return tableValidationErrors;
-      }
+  //VALIDATE TABLE
+  const validateTable = () => {
+    const errors = {};
+  
+    // Validate each field
+    if (!item.trim()) {
+      errors.item = 'Item is required';
     }
-  };
+  
+    if (!description.trim()) {
+      errors.description = 'Description is required';
+    }
+  
+    if (!cost.trim()) {
+      errors.cost = 'Cost is required';
+    }
+  
+    if (!quantity.trim()) {
+      errors.quantity = 'Quantity is required';
+    }
 
+    if (!discount.trim()) {
+      errors.discount = 'Discount is required';
+    }
+
+    if (!tax.trim()) {
+      errors.tax = 'Tax is required';
+    }
+    // Add additional validations for other fields as needed
+    return errors;
+  };
+  
+  
   //HANDLE SUBMIT
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const errors = await validateTable();
+    
+    // Validate if all required fields are filled
+    const errors = validateTable();
     setTableValidationErrors(errors);
+  
+    // If there are no errors, add the item to the table
+    if (Object.keys(errors).length === 0) {
+      addItem();
+    }
   };
 
   

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeaderForm = ({ name, setName, logo, setLogo, validationError, setValidationErrors }) => {
+const HeaderForm = ({ name, setName, logo, setLogo, check_required, error}) => {
 
   
   function check_apha(event) {
@@ -9,6 +9,8 @@ const HeaderForm = ({ name, setName, logo, setLogo, validationError, setValidati
       event.preventDefault();
     }
   }
+
+  
   
   return (
     <div className="bg-gray-100 p-8 rounded-lg shadow-md text-center">
@@ -22,17 +24,11 @@ const HeaderForm = ({ name, setName, logo, setLogo, validationError, setValidati
             name='name'
             placeholder='Name'
             onKeyDown={check_apha}
-            className={`px-4 py-2 border ${validationError && validationError.name ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-blue-500`}
+            onKeyUp={(e)=>{check_required(e, 'name')}}
             value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-              // Clear validation error for 'name' field
-              setValidationErrors((prevErrors) => ({
-                  ...prevErrors,
-                  name: undefined,
-              }));}}
+            onChange={(e)=>{setName(e.target.value)}}
           />
-          {validationError &&  validationError.name && <p className='text-red-500 mt-2'>{validationError.name}</p>}
+          {error && error.name && <p style={{ color: 'red' }}>{error.name}</p>}
         </div>
         <div className="col-span-1">
           <label htmlFor='logo' className='text-lg mb-2'>Upload Your Logo:</label>
@@ -50,7 +46,6 @@ const HeaderForm = ({ name, setName, logo, setLogo, validationError, setValidati
         </div>
       </div>
       <div className='flex flex-col items-center'>
-        {/* Additional content can be added here */}
       </div>
     </div>
   );

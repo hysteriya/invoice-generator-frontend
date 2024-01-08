@@ -1,16 +1,12 @@
 import React, { useState, useRef } from "react";
 import Details from "./components/Details";
-// import Footer from "./components/Footer";
-//import Header from "./components/Header";
 import InvoiceBill from "./components/InvoiceBill";
 import Notes from "./components/Notes";
 import Table from "./components/Table";
 import Form from "./components/form/Form";
 import Sidebar from "./components/form/Sidebar";
-// import ReactToPrint from 'react-to-print';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { validate } from "uuid";
 
 
 function App() {
@@ -48,8 +44,7 @@ function App() {
 
   const [notes, setNotes] = useState('');
 
-  //VALIDATION STATES
-  const [validationErrors, setValidationErrors] = useState({});
+  const [error, setError] = useState({});
 
   //DOWNLOAD
   const pdfRef = useRef();
@@ -89,49 +84,18 @@ function App() {
     }
   }
 
-  //CHECK EMAIL
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
   //CHECK REQUIRED
-  const requiredField = (field) => {
-    return field.trim() !== '';
+  function check_required(event, fieldName) {
+    const inputValue = event.target.value;
+    const isFieldValid = inputValue.trim() !== '';
+    if (isFieldValid() === '') {
+      setError({ ...error, [fieldName]: 'Required.' })
+    }
+    else {
+      const { [fieldName]: removedField, ...restOfErrors } = error;
+      setError({ ...restOfErrors });
+    }
   }
-
-  // VALIDATION
-  const validateForm = () => {
-    let errors = {};
-
-    // Validate name
-    if (!requiredField(name)) {
-      errors.name = "Name is required";
-    }
-
-    // Validate email
-    if (!validateEmail(invoiceMail)) {
-      errors.invoiceMail = "Invalid email address";
-    }
-
-    // Validate other fields as needed
-
-    // Set validation errors state
-    setValidationErrors(errors);
-
-    // Check if there are any errors
-    const isValid = Object.keys(errors).length === 0;
-
-    // Return the validation result
-    return isValid;
-  };
-
-
-
-
-
-
-
 
 
 
@@ -194,7 +158,9 @@ function App() {
 
         notes={notes}
         setNotes={setNotes}
-        validateForm={validateForm}
+        error={error}
+        setError={setError}
+
       />
       {showInvoice ? //IF SHOWINVOICE IS TRUE: on successfull validation of form
         <div className="m-5 p-5 xl:max-w-6xl xl:mx-auto bg-slate-300 rounded shadow" ref={pdfRef}>
@@ -229,7 +195,6 @@ function App() {
               total={total}
               taxTotal={taxTotal}
               subTotal={subTotal} />
-
             <Notes setShowInvoice={setShowInvoice}
               notes={notes} />
 
@@ -292,7 +257,10 @@ function App() {
             notes={notes}
             setNotes={setNotes}
             check_numeric={check_numeric}
-            validateEmail={validateEmail} />
+            check_required={check_required}
+            error={error}
+
+          />
 
         </div>
       }

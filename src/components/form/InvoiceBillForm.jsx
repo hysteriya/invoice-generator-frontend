@@ -20,26 +20,10 @@ const InvoiceBillForm = ({
   setBankName,
   setCountry,
   setIfsc,
-  validationError,
-  setValidationErrors,
   check_numeric,
-  validateEmail
+  check_required,
+  error
 }) => {
-  // CLEAR ERRORS AND SETVALUE (HANDLE INPUT CHANGE)
-  const handleInputChange = (fieldName, valueSetter) => (e) => {
-    const value = e.target.value;
-    valueSetter(value);
-    const errors={...validationError};
-    if (fieldName=== 'invoiceMail'){
-      errors.invoiceMail=!validateEmail(value) ? 'Invalid email' : undefined
-    }
-
-    // Clear validation error for the specific field
-    // setValidationErrors((prevErrors) => ({
-    //   ...prevErrors,
-    //   [fieldName]: undefined,
-    // }));
-  };
 
   // CHECK ALPHABET
   function check_alpha(event) {
@@ -50,8 +34,8 @@ const InvoiceBillForm = ({
   }
 
   return (
-    <div className='grid grid-cols-2 gap-8 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8'>
-      <section className='invoice col-span-1'>
+    <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8'>
+      <div className='col-span-1'>
         <div className='mb-4'>
           <label htmlFor='invoiceName' className='block text-lg mb-2'>
             Enter Invoice Name:
@@ -62,15 +46,14 @@ const InvoiceBillForm = ({
             name='invoiceName'
             placeholder='Name'
             onKeyDown={check_alpha}
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.invoiceName ? 'border-red-500' : ''
-            }`}
+            onKeyUp={(e) => { check_required(e, 'invoiceName'); }}
             value={invoiceName}
-            onChange={handleInputChange('invoiceName', setInvoiceName)}
+            onChange={(e) => { setInvoiceName(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.invoiceName ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.invoiceName && (
-            <p className='text-red-500 mt-2'>{validationError.invoiceName}</p>
-          )}
+          {error && error.invoiceName && <p className="text-red-500 mt-2">{error.invoiceName}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='invoiceAddress' className='block text-lg mb-2'>
@@ -81,31 +64,30 @@ const InvoiceBillForm = ({
             id='invoiceAddress'
             name='invoiceAddress'
             placeholder='Address'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.invoiceAddress ? 'border-red-500' : ''
-            }`}
             value={invoiceAddress}
-            onChange={handleInputChange('invoiceAddress', setInvoiceAddress)}
+            onKeyUp={(e) => { check_required(e, 'invoiceAddress'); }}
+            onChange={(e) => { setInvoiceAddress(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.invoiceAddress ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.invoiceAddress && (
-            <p className='text-red-500 mt-2'>{validationError.invoiceAddress}</p>
-          )}
+          {error && error.invoiceAddress && <p className="text-red-500 mt-2">{error.invoiceAddress}</p>}
         </div>
         <div className='mb-4'>
-          <label htmlFor='invoicePhone' className='block text-lg mb-2'>
+          <label htmlFor='invoicePhone' className='block text-lg'>
             Enter Invoice Phone:
           </label>
           <PhoneInput
             international
             defaultCountry='IN'
             value={invoicePhone}
-            onChange={(value) => {
-              setInvoicePhone(value);
-            }}
+            onKeyUp={(e) => { check_required(e, 'invoicePhone'); }}
+            onChange={(value) => { setInvoicePhone(value); }}
+            className={`mx-5 w-full border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.invoicePhone ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.invoicePhone && (
-            <p className='text-red-500 mt-2'>{validationError.invoicePhone}</p>
-          )}
+          {error && error.invoicePhone && <p className="text-red-500 mt-2">{error.invoicePhone}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='invoiceMail' className='block text-lg mb-2'>
@@ -116,18 +98,17 @@ const InvoiceBillForm = ({
             id='invoiceMail'
             name='invoiceMail'
             placeholder='Mail'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.invoiceMail ? 'border-red-500' : ''
-            }`}
             value={invoiceMail}
-            onChange={handleInputChange('invoiceMail', setInvoiceMail)}
+            onKeyUp={(e) => { check_required(e, 'invoiceMail'); }}
+            onChange={(e) => { setInvoiceMail(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.invoiceMail ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.invoiceMail && (
-            <p className='text-red-500 mt-2'>{validationError.invoiceMail}</p>
-          )}
+          {error && error.invoiceMail && <p className="text-red-500 mt-2">{error.invoiceMail}</p>}
         </div>
-      </section>
-      <section className='bill col-span-1'>
+      </div>
+      <div className='col-span-1'>
         <div className='mb-4'>
           <label htmlFor='totalDue' className='block text-lg mb-2'>
             Enter Total Due:
@@ -139,15 +120,14 @@ const InvoiceBillForm = ({
             name='totalDue'
             placeholder='Due'
             onKeyDown={check_numeric}
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.totalDue ? 'border-red-500' : ''
-            }`}
+            onKeyUp={(e) => { check_required(e, 'totalDue'); }}
             value={totalDue}
-            onChange={handleInputChange('totalDue', setTotalDue)}
+            onChange={(e) => { setTotalDue(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.totalDue ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.totalDue && (
-            <p className='text-red-500 mt-2'>{validationError.totalDue}</p>
-          )}
+          {error && error.totalDue && <p className="text-red-500 mt-2">{error.totalDue}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='bankName' className='block text-lg mb-2'>
@@ -159,15 +139,14 @@ const InvoiceBillForm = ({
             name='bankName'
             placeholder='Bank Name'
             onKeyDown={check_alpha}
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.bankName ? 'border-red-500' : ''
-            }`}
             value={bankName}
-            onChange={handleInputChange('bankName', setBankName)}
+            onKeyUp={(e) => { check_required(e, 'bankName'); }}
+            onChange={(e) => { setBankName(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.bankName ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.bankName && (
-            <p className='text-red-500 mt-2'>{validationError.bankName}</p>
-          )}
+          {error && error.bankName && <p className="text-red-500 mt-2">{error.bankName}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='country' className='block text-lg mb-2'>
@@ -178,15 +157,14 @@ const InvoiceBillForm = ({
             id='country'
             name='country'
             placeholder='Country'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.country ? 'border-red-500' : ''
-            }`}
             value={country}
-            onChange={handleInputChange('country', setCountry)}
+            onKeyUp={(e) => { check_required(e, 'country'); }}
+            onChange={(e) => { setCountry(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.country ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.country && (
-            <p className='text-red-500 mt-2'>{validationError.country}</p>
-          )}
+          {error && error.country && <p className="text-red-500 mt-2">{error.country}</p>}
         </div>
         <div className='mb-4'>
           <label htmlFor='ifsc' className='block text-lg mb-2'>
@@ -197,17 +175,17 @@ const InvoiceBillForm = ({
             id='ifsc'
             name='ifsc'
             placeholder='IFSC'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${
-              validationError && validationError.ifsc ? 'border-red-500' : ''
-            }`}
             value={ifsc}
-            onChange={handleInputChange('ifsc', setIfsc)}
+            onKeyDown={check_numeric}
+            onKeyUp={(e) => { check_required(e, 'ifsc'); }}
+            onChange={(e) => { setIfsc(e.target.value); }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.ifsc ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.ifsc && (
-            <p className='text-red-500 mt-2'>{validationError.ifsc}</p>
-          )}
+          {error && error.ifsc && <p className="text-red-500 mt-2">{error.ifsc}</p>}
         </div>
-      </section>
+      </div>
     </div>
   );
 };

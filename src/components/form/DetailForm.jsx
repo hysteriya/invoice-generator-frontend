@@ -9,95 +9,112 @@ const DetailForm = ({
   setDateIssue,
   dateDue,
   setDateDue,
-  validationError,
-  setValidationErrors, check_numeric
+  check_numeric,
+  check_required,
+  error,
 }) => {
   return (
-    <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md'>
-      <div className='col-span-1'>
-        <div className='mb-4'>
-          <label htmlFor='address' className='block text-lg mb-2'>Enter Your Address:</label>
+    <div className="grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8">
+      <div className="col-span-1">
+        <div className="mb-4">
+          <label htmlFor="address" className="block text-lg mb-2">
+            Enter Your Address:
+          </label>
           <input
-            type='text'
-            id='address'
-            name='address'
-            placeholder='Address'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.address ? 'border-red-500' : ''}`}
+            type="text"
+            id="address"
+            name="address"
+            placeholder="Address"
+            onKeyUp={(e) => {
+              check_required(e, 'address');
+            }}
             value={address}
             onChange={(e) => {
               setAddress(e.target.value);
-              // Clear validation error for 'address' field
-              setValidationErrors((prevErrors) => ({
-                ...prevErrors,
-                address: undefined,
-              }));
             }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.address ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.address && <p className='text-red-500 mt-2'>{validationError.address}</p>}
+          {error && error.address && (
+            <p className="text-red-500 mt-2">{error.address}</p>
+          )}
         </div>
-        <div className='mb-4'>
-          <label htmlFor='dateIssue' className='block text-lg mb-2'>Enter Your Issue Date:</label>
+        <div className="mb-4">
+          <label htmlFor="dateIssue" className="block text-lg mb-2">
+            Enter Your Issue Date:
+          </label>
           <input
-            type='date'
-            id='dateIssue'
-            name='dateIssue'
-            placeholder='Issue Date'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.dateIssue ? 'border-red-500' : ''}`}
+            type="date"
+            id="dateIssue"
+            name="dateIssue"
+            placeholder="Issue Date"
+            onKeyUp={(e) => {
+              check_required(e, 'dateIssue');
+            }}
             value={dateIssue}
             onChange={(e) => {
               setDateIssue(e.target.value);
-              // Clear validation error for 'dateIssue' field
-              setValidationErrors((prevErrors) => ({
-                ...prevErrors,
-                dateIssue: undefined,
-              }));
             }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.dateIssue ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.dateIssue && <p className='text-red-500 mt-2'>{validationError.dateIssue}</p>}
+          {error && error.dateIssue && (
+            <p className="text-red-500 mt-2">{error.dateIssue}</p>
+          )}
         </div>
       </div>
-      <div className='col-span-1'>
-        <div className='mb-4'>
-          <label htmlFor='invoice' className='block text-lg mb-2'>Enter Your Invoice Number:</label>
+      <div className="col-span-1">
+        <div className="mb-4">
+          <label htmlFor="invoice" className="block text-lg mb-2">
+            Enter Your Invoice Number:
+          </label>
           <input
-            type='number'
-            min='0'
-            id='invoice'
-            name='invoice'
-            placeholder='Invoice Number'
+            type="number"
+            min="0"
+            id="invoice"
+            name="invoice"
+            placeholder="Invoice Number"
             onKeyDown={check_numeric}
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.invoice ? 'border-red-500' : ''}`}
+            onKeyUp={(e) => {
+              check_required(e, 'invoice');
+            }}
             value={invoice}
             onChange={(e) => {
               setInvoice(e.target.value);
-              // Clear validation error for 'invoice' field
-              setValidationErrors((prevErrors) => ({
-                ...prevErrors,
-                invoice: undefined,
-              }));
             }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.invoice ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.invoice && <p className='text-red-500 mt-2'>{validationError.invoice}</p>}
+          {error && error.invoice && (
+            <p className="text-red-500 mt-2">{error.invoice}</p>
+          )}
         </div>
-        <div className='mb-4'>
-          <label htmlFor='dateDue' className='block text-lg mb-2'>Enter Your Due Date:</label>
+        <div className="mb-4">
+          <label htmlFor="dateDue" className="block text-lg mb-2">
+            Enter Your Due Date:
+          </label>
           <input
-            type='date'
-            id='dateDue'
-            name='dateDue'
-            placeholder='Due Date'
-            className={`px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 w-full ${validationError && validationError.dateDue ? 'border-red-500' : ''}`}
+            type="date"
+            id="dateDue"
+            name="dateDue"
+            placeholder="Due Date"
+            onKeyUp={(e) => {
+              check_required(e, 'dateDue');
+            }}
             value={dateDue}
             onChange={(e) => {
               setDateDue(e.target.value);
-              // Clear validation error for 'dateDue' field
-              setValidationErrors((prevErrors) => ({
-                ...prevErrors,
-                dateDue: undefined,
-              }));
             }}
+            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
+              error && error.dateDue ? 'border-red-500' : 'border-gray-300'
+            }`}
           />
-          {validationError && validationError.dateDue && <p className='text-red-500 mt-2'>{validationError.dateDue}</p>}
+          {error && error.dateDue && (
+            <p className="text-red-500 mt-2">{error.dateDue}</p>
+          )}
         </div>
       </div>
     </div>
