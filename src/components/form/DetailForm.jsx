@@ -26,6 +26,7 @@ const DetailForm = ({
             name="address"
             placeholder="Address"
             onFocus={(e) => check_required(e, 'address')}
+            onKeyUp={(e) => check_required(e, 'address')}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
@@ -69,6 +70,7 @@ const DetailForm = ({
             placeholder="Invoice Number"
             onKeyDown={check_numeric}
             onFocus={(e) => check_required(e, 'invoice')}
+            onKeyUp={(e) => check_required(e, 'invoice')}
             value={invoice}
             onChange={(e) => setInvoice(e.target.value)}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${

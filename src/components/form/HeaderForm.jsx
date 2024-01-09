@@ -24,6 +24,7 @@ const HeaderForm = ({ name, setName, logo, setLogo, check_required, error }) => 
             placeholder="Name"
             onKeyDown={check_alpha}
             onFocus={(e) => check_required(e, 'name')}
+            onKeyUp={(e) => check_required(e, 'name')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${

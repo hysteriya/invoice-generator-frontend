@@ -38,6 +38,7 @@ const InvoiceBillForm = ({
             placeholder='Name'
             onKeyDown={check_alpha}
             onFocus={(e) => { check_required(e, 'invoiceName'); }}
+            onKeyUp={(e) => { check_required(e, 'invoiceName'); }}
             value={invoiceName}
             onChange={(e) => { setInvoiceName(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoiceName ? 'border-red-500' : 'border-gray-300'
@@ -56,6 +57,7 @@ const InvoiceBillForm = ({
             placeholder='Address'
             value={invoiceAddress}
             onFocus={(e) => { check_required(e, 'invoiceAddress'); }}
+            onKeyUp={(e) => { check_required(e, 'invoiceAddress'); }}
             onChange={(e) => { setInvoiceAddress(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoiceAddress ? 'border-red-500' : 'border-gray-300'
               }`}
@@ -71,6 +73,7 @@ const InvoiceBillForm = ({
             defaultCountry='IN'
             value={invoicePhone}
             onFocus={(e) => { check_required(e, 'invoicePhone'); }}
+            onKeyUp={(e) => { check_required(e, 'invoicePhone'); }}
             onChange={(value) => { setInvoicePhone(value); }}
             className={`w-full border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoicePhone ? 'border-red-500' : 'border-gray-300'
               }`}
@@ -88,6 +91,7 @@ const InvoiceBillForm = ({
             placeholder='Mail'
             value={invoiceMail}
             onFocus={(e) => { check_required(e, 'invoiceMail'); }}
+            onKeyUp={(e) => { check_required(e, 'invoiceMail'); }}
             onChange={(e) => { setInvoiceMail(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoiceMail ? 'border-red-500' : 'border-gray-300'
               }`}
@@ -109,6 +113,7 @@ const InvoiceBillForm = ({
             placeholder='Due'
             onKeyDown={check_numeric}
             onFocus={(e) => { check_required(e, 'totalDue'); }}
+            onKeyUp={(e) => { check_required(e, 'totalDue'); }}
             value={totalDue}
             onChange={(e) => { setTotalDue(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.totalDue ? 'border-red-500' : 'border-gray-300'
@@ -128,6 +133,7 @@ const InvoiceBillForm = ({
             onKeyDown={check_alpha}
             value={bankName}
             onFocus={(e) => { check_required(e, 'bankName'); }}
+            onKeyUp={(e) => { check_required(e, 'bankName'); }}
             onChange={(e) => { setBankName(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.bankName ? 'border-red-500' : 'border-gray-300'
               }`}
@@ -145,6 +151,7 @@ const InvoiceBillForm = ({
             placeholder='Country'
             value={country}
             onFocus={(e) => { check_required(e, 'country'); }}
+            onKeyUp={(e) => { check_required(e, 'country'); }}
             onChange={(e) => { setCountry(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.country ? 'border-red-500' : 'border-gray-300'
               }`}
@@ -163,6 +170,7 @@ const InvoiceBillForm = ({
             value={ifsc}
             onKeyDown={check_numeric}
             onFocus={(e) => { check_required(e, 'ifsc'); }}
+            onKeyUp={(e) => { check_required(e, 'ifsc'); }}
             onChange={(e) => { setIfsc(e.target.value); }}
             className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.ifsc ? 'border-red-500' : 'border-gray-300'
               }`}
