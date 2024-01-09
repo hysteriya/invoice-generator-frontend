@@ -11,7 +11,6 @@ const InvoiceBillForm = ({
   setInvoiceAddress,
   setInvoicePhone,
   setInvoiceMail,
-
   totalDue,
   bankName,
   country,
@@ -21,22 +20,14 @@ const InvoiceBillForm = ({
   setCountry,
   setIfsc,
   check_numeric,
+  check_alpha,
   check_required,
   error
 }) => {
-
-  // CHECK ALPHABET
-  function check_alpha(event) {
-    var key = event.key;
-    if (!((key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key === 'Backspace')) {
-      event.preventDefault();
-    }
-  }
-
   return (
-    <div className='grid grid-cols-2 gap-4 my-10 bg-gray-50 p-8 rounded-lg shadow-md my-8'>
+    <div className='grid grid-cols-2 gap-8 my-8 bg-gray-50 p-8 rounded-lg shadow-md'>
       <div className='col-span-1'>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='invoiceName' className='block text-lg mb-2'>
             Enter Invoice Name:
           </label>
@@ -46,16 +37,15 @@ const InvoiceBillForm = ({
             name='invoiceName'
             placeholder='Name'
             onKeyDown={check_alpha}
-            onKeyUp={(e) => { check_required(e, 'invoiceName'); }}
+            onFocus={(e) => { check_required(e, 'invoiceName'); }}
             value={invoiceName}
             onChange={(e) => { setInvoiceName(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.invoiceName ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoiceName ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.invoiceName && <p className="text-red-500 mt-2">{error.invoiceName}</p>}
         </div>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='invoiceAddress' className='block text-lg mb-2'>
             Enter Invoice Address:
           </label>
@@ -65,15 +55,14 @@ const InvoiceBillForm = ({
             name='invoiceAddress'
             placeholder='Address'
             value={invoiceAddress}
-            onKeyUp={(e) => { check_required(e, 'invoiceAddress'); }}
+            onFocus={(e) => { check_required(e, 'invoiceAddress'); }}
             onChange={(e) => { setInvoiceAddress(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.invoiceAddress ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoiceAddress ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.invoiceAddress && <p className="text-red-500 mt-2">{error.invoiceAddress}</p>}
         </div>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='invoicePhone' className='block text-lg'>
             Enter Invoice Phone:
           </label>
@@ -81,15 +70,14 @@ const InvoiceBillForm = ({
             international
             defaultCountry='IN'
             value={invoicePhone}
-            onKeyUp={(e) => { check_required(e, 'invoicePhone'); }}
+            onFocus={(e) => { check_required(e, 'invoicePhone'); }}
             onChange={(value) => { setInvoicePhone(value); }}
-            className={`mx-5 w-full border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.invoicePhone ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoicePhone ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.invoicePhone && <p className="text-red-500 mt-2">{error.invoicePhone}</p>}
         </div>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='invoiceMail' className='block text-lg mb-2'>
             Enter Invoice Email:
           </label>
@@ -99,17 +87,17 @@ const InvoiceBillForm = ({
             name='invoiceMail'
             placeholder='Mail'
             value={invoiceMail}
-            onKeyUp={(e) => { check_required(e, 'invoiceMail'); }}
+            onFocus={(e) => { check_required(e, 'invoiceMail'); }}
             onChange={(e) => { setInvoiceMail(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.invoiceMail ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.invoiceMail ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.invoiceMail && <p className="text-red-500 mt-2">{error.invoiceMail}</p>}
         </div>
       </div>
+
       <div className='col-span-1'>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='totalDue' className='block text-lg mb-2'>
             Enter Total Due:
           </label>
@@ -120,16 +108,15 @@ const InvoiceBillForm = ({
             name='totalDue'
             placeholder='Due'
             onKeyDown={check_numeric}
-            onKeyUp={(e) => { check_required(e, 'totalDue'); }}
+            onFocus={(e) => { check_required(e, 'totalDue'); }}
             value={totalDue}
             onChange={(e) => { setTotalDue(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.totalDue ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.totalDue ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.totalDue && <p className="text-red-500 mt-2">{error.totalDue}</p>}
         </div>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='bankName' className='block text-lg mb-2'>
             Enter Bank Name:
           </label>
@@ -140,15 +127,14 @@ const InvoiceBillForm = ({
             placeholder='Bank Name'
             onKeyDown={check_alpha}
             value={bankName}
-            onKeyUp={(e) => { check_required(e, 'bankName'); }}
+            onFocus={(e) => { check_required(e, 'bankName'); }}
             onChange={(e) => { setBankName(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.bankName ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.bankName ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.bankName && <p className="text-red-500 mt-2">{error.bankName}</p>}
         </div>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='country' className='block text-lg mb-2'>
             Enter Country:
           </label>
@@ -158,15 +144,14 @@ const InvoiceBillForm = ({
             name='country'
             placeholder='Country'
             value={country}
-            onKeyUp={(e) => { check_required(e, 'country'); }}
+            onFocus={(e) => { check_required(e, 'country'); }}
             onChange={(e) => { setCountry(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.country ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.country ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.country && <p className="text-red-500 mt-2">{error.country}</p>}
         </div>
-        <div className='mb-4'>
+        <div className='mb-6'>
           <label htmlFor='ifsc' className='block text-lg mb-2'>
             Enter IFSC:
           </label>
@@ -177,11 +162,10 @@ const InvoiceBillForm = ({
             placeholder='IFSC'
             value={ifsc}
             onKeyDown={check_numeric}
-            onKeyUp={(e) => { check_required(e, 'ifsc'); }}
+            onFocus={(e) => { check_required(e, 'ifsc'); }}
             onChange={(e) => { setIfsc(e.target.value); }}
-            className={`mx-5 w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${
-              error && error.ifsc ? 'border-red-500' : 'border-gray-300'
-            }`}
+            className={`w-full p-2 border-b-2 focus:outline-none focus:border-blue-500 ${error && error.ifsc ? 'border-red-500' : 'border-gray-300'
+              }`}
           />
           {error && error.ifsc && <p className="text-red-500 mt-2">{error.ifsc}</p>}
         </div>
@@ -189,5 +173,6 @@ const InvoiceBillForm = ({
     </div>
   );
 };
+
 
 export default InvoiceBillForm;

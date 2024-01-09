@@ -87,9 +87,8 @@ function App() {
   //CHECK REQUIRED
   function check_required(event, fieldName) {
     const inputValue = event.target.value;
-    const isFieldValid = inputValue.trim() !== '';
-    if (isFieldValid() === '') {
-      setError({ ...error, [fieldName]: 'Required.' })
+    if (inputValue.trim('') === '') {
+      setError({ ...error, [fieldName]: `${fieldName} is required.` })
     }
     else {
       const { [fieldName]: removedField, ...restOfErrors } = error;
@@ -195,8 +194,8 @@ function App() {
               total={total}
               taxTotal={taxTotal}
               subTotal={subTotal} />
-            <Notes setShowInvoice={setShowInvoice}
-              notes={notes} />
+            {notes && <Notes setShowInvoice={setShowInvoice}
+              notes={notes} />}
 
           </div>
         </div>

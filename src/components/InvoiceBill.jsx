@@ -11,16 +11,16 @@ const InvoiceBill = ({
   ifsc,
 }) => {
   return (
-    <div>
-      <div className="invoice-bill flex justify-between my-10">
-        <div className="invoice w-3/4">
+    <div className="my-10">
+      <div className="invoice-bill flex flex-col md:flex-row justify-between">
+        <div className="invoice mb-4 md:mr-4 w-full md:w-3/4">
           <h2 className="font-bold mb-2">Invoice to:</h2>
           <p className="mb-2">{invoiceName}</p>
           <p className="mb-2 whitespace-pre-line max-w-[150px]">{invoiceAddress}</p>
           <p className="mb-2">{invoicePhone}</p>
           <p>{invoiceMail}</p>
         </div>
-        <div className="bill w-1/2">
+        <div className="bill w-full md:w-1/2 self-end text-right md:text-right">
           <h2 className="font-bold mb-2">Bill to:</h2>
           <p className="mb-2">
             <span className="block">Total Due: {totalDue}</span>
